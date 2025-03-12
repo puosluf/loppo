@@ -1,1 +1,23 @@
+#提取html
+from bs4 import BeautifulSoup
+import requests
+url = "http://www.pythonscraping.com/pages/warandpeace.html"  #在此输入网页地址
+response = requests.get(url)  #回复url的内容
+html_content = response.text  #将url内容设置为文本产出
+soup = BeautifulSoup(html_content, "lxml")  #用beautifulsoup解析文本 赋为soup
+print(soup)  #生成soup的内容
 
+#用find_all函数查找特定内容
+find_all(name, attrs, recursive, string, limit, kwargs) #基本语法
+links = soup.find_all("a")  #这里从第七行开始续写，找到所有<a>标签的内容
+for link in links:
+    print(link.get_text()) #用文本形式输出links中的link内容
+links = soup.find_all("span", {"class":{"green","red"}})  #找到"span"中所有类别为"green"和"red"的内容
+import re  #用正则表达式查找标签
+tags = soup.find_all(re.compile("^b"))  # 查找所有以 'b' 开头的标签
+for tag in tags:
+    print(tag)
+tags = soup.find_all(string=re.compile("Dormouse"))  #查找所有包含字符串"Dormouse"的标签
+for tag in tags:
+    print(tag)
+links = soup.find_all('a', limit=2) #如果加上限制，只查找前两个a tag的话
